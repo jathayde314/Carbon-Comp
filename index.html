@@ -33,6 +33,7 @@
     <script>
         var provider = new firebase.auth.FacebookAuthProvider();
         provider.addScope('user_birthday');
+        var access;
         function signIn() {
             firebase.auth().signInWithPopup(provider).then((result) => {
                 /** @type {firebase.auth.OAuthCredential} */
@@ -41,6 +42,9 @@
                 var user = result.user;
                 // This gives you a Facebook Access Token. You can use it to access the Facebook API.
                 var accessToken = credential.accessToken;
+                console.log(accessToken);
+                console.log(result);
+                console.log(result.user.uid);
                 // ... 
             }).catch((error) => {
                 // Handle Errors here.
@@ -54,10 +58,8 @@
                 window.alert(error);
             });
         }
-        console.log(accessToken);
     </script>
     <button onclick="signIn()">Facebook Signin</button>
-    <button onclick="signOut()">Facebook Get Info</button>
 
 </body>
 
