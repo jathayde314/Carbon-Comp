@@ -1,34 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class NameForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
+    class Login extends Component {
+      state = {
+        email: '',
+        password: '',
+        confirmPassword: '',
+      }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+      onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+      }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+      onSubmit = (e) => {
+        e.preventDefault();
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
+        //handle form processing here....
+      }
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
+      render() {
+        const { email, password, confirmPassword } = this.state;
 
-export default NameForm;
+        return (
+          <div className="container">
+            <form
+              className="form-signin"
+              onSubmit={this.onSubmit}
+            >
+              <h2 className="form-signin-heading">
+                Create Account
+              </h2>
+
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="email"
+                  className="form-control"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={this.onChange}
+                  autoFocus
+                />
+                <span className="help-block"></span>
+              </div>
+
+              <div className="form-group">
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Password"
+                  value={password}
+                  onChange={this.onChange}
+                />
+                <span className="help-block"></span>
+              </div>
+
+              <div className="form-group">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  className="form-control"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={this.onChange}
+                />
+                <span className="help-block"></span>
+              </div>
+
+              <button
+                className="btn btn-lg btn-primary btn-block"
+                type="submit"
+              >
+                Create Account
+              </button>
+            </form>
+          </div>
+        );
+      }
+    };
+
+    export default Login;
