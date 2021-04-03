@@ -43,6 +43,8 @@ xcuserdata
 .project
 .settings
 
+.vscode 
+
 # VSCode
 .history/
 
