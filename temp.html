@@ -1,0 +1,90 @@
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBawpLvH6k3FwwVNBrBGqcaId6Ov7h4jvw",
+            authDomain: "uncommonhacks-edc6f.firebaseapp.com",
+            projectId: "uncommonhacks-edc6f",
+            storageBucket: "uncommonhacks-edc6f.appspot.com",
+            messagingSenderId: "747854102973",
+            appId: "1:747854102973:web:6ac52a7fe2bd474dcdd2d4",
+            measurementId: "G-0V8DXWQY7N"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <script>
+        var provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('user_birthday');
+        function signIn() {
+            firebase.auth().signInWithPopup(provider).then((result) => {
+                /** @type {firebase.auth.OAuthCredential} */
+                var credential = result.credential;
+                // The signed-in user info.
+                var user = result.user;
+                // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                var accessToken = credential.accessToken;
+                // ... 
+            }).catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+                window.alert(error);
+            });
+        }
+        function signOut() {
+            firebase.auth().getRedirectResult().then((result) => {
+                if (result.credential) {
+                    /** @type {firebase.auth.OAuthCredential} */
+                    var credential = result.credential;
+                    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                    var token = credential.accessToken;
+                    // ...
+                }
+                // The signed-in user info.
+                var user = result.user;
+            }).catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+            });
+        }
+    </script>
+    <button onclick="signIn()">Facebook Signin</button>
+    <button onclick="signOut()">Facebook Signout</button>
+
+
+    <p> Welcome to our website. Compete with your friends to see who can be the most "Green".</p>
+</body>
+
+</html>
