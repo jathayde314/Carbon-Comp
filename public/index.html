@@ -206,7 +206,6 @@
 
     <script>
         var provider = new firebase.auth.FacebookAuthProvider();
-        provider.addScope('user_birthday');
         var access;
         function signIn() {
             firebase.auth().signInWithPopup(provider).then((result) => {
