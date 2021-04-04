@@ -20,300 +20,297 @@
 </head>
 
 <body>
-
-    <body>
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <div class="wrapper">
-            <div class="sidebar" data-color="green" data-image="/assets/img/sidebar-5.jpg">
-                <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <div class="wrapper">
+        <div class="sidebar" data-color="green" data-image="/assets/img/sidebar-5.jpg">
+            <!--
                                 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
                         
                                 Tip 2: you can also add an image using data-image tag
                             -->
-                <div class="sidebar-wrapper">
-                    <div class="logo">
-                        <a href="index.html" class="simple-text">
-                            Carbon Comp
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="index.html" class="simple-text">
+                        Carbon Comp
+                    </a>
+                </div>
+                <ul class="nav">
+                    <li>
+                        <a class="nav-link" href="leaderboard.html">
+                            <i class="nc-icon nc-icon nc-paper-2"></i>
+                            <p>Leaderboard</p>
                         </a>
-                    </div>
-                    <ul class="nav">
-                        <li>
-                            <a class="nav-link" href="leaderboard.html">
-                                <i class="nc-icon nc-icon nc-paper-2"></i>
-                                <p>Leaderboard</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="form.html">
-                                <i class="nc-icon nc-bell-55"></i>
-                                <p>Record Activity</p>
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="goal.html">
-                                <i class="nc-icon nc-check-2"></i>
-                                <p>Put Your Goals</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="friends.html">
-                                <i class="nc-icon nc-badge"></i>
-                                <p>Friends</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="main-panel">
-                <!-- Navbar -->
-                <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="index.html"> Personal Dashboard </a>
-                        <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-bar burger-lines"></span>
-                            <span class="navbar-toggler-bar burger-lines"></span>
-                            <span class="navbar-toggler-bar burger-lines"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                            <ul class="nav navbar-nav mr-auto">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nc-icon nc-zoom-split"></i>
-                                        <span class="d-lg-block">
-                                            <input type="text" placeholder="Search for friends (by email)" id = "friends"
-                                                style="width: 500px; margin-left: 20px">
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="navbar-nav ml-auto" id="content">
-                                <button class="btn btn-primary" onclick="signIn()">Facebook Sign In</button>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <script>
-                    document.getElementById('friends').addEventListener('keypress', function (e) {
-                        if (e.key === 'Enter') {
-                            $.ajax({
-                                type: 'POST',
-                                url: '/friends',
-                                data: { command: "SELECT id, email FROM db.userdata3 WHERE email = " + "'" + document.getElementById('friends').value + "';" },
-                                success: function (t) {
-                                    if (t.length == 0) {
-                                        window.alert("person does not have account");
-                                    }
-                                    else {
-                                        window.location.href = "friends.html";
-                                        localStorage.setItem("friendid", t[0].email)
-                                        localStorage.setItem("friendemail", t[0].id)
-                                    }
-                                },
-                                error: function (t) {
-                                    console.log(t);
-                                }
-                            });
-                        }
-                    });
-                </script>
-                <!-- End Navbar -->
-
-
-                <div class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="card">
-                                    <div class="header" style="text-align: center">
-                                        <h4 class="title">Enter Your Goals</h4>
-                                    </div>
-                                    <div class="content">
-                                        <form id="form">
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group" style="text-align: center">
-                                                        <label>Driving Goal?</label>
-                                                        <input type="checkbox" class="form-control" name="drivenBool">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Minutes Driven</label>
-                                                        <input type="number" class="form-control" name="drivenMinutes"
-                                                            placeholder="minutes">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>People in Carpool</label>
-                                                        <input type="number" class="form-control" name="drivenPeople"
-                                                            placeholder="type 1 if no carpool">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group" style="text-align: center">
-                                                        <label>Biking Goal?</label>
-                                                        <input type="checkbox" class="form-control" name="bikedBool">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Minutes Biked</label>
-                                                        <input type="number" class="form-control" name="bikedMinutes"
-                                                            placeholder="minutes">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group" style="text-align: center">
-                                                        <label>Walking Goal?</label>
-                                                        <input type="checkbox" class="form-control" name="walkedBool">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Minutes Walked</label>
-                                                        <input type="number" class="form-control" name="walkedMinutes"
-                                                            placeholder="minutes">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group" style="text-align: center">
-                                                        <label>Flying Goal?</label>
-                                                        <input type="checkbox" class="form-control" name="flownBool">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Hours Flown</label>
-                                                        <input type="number" class="form-control" name="flownMinutes"
-                                                            placeholder="hours">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <button type="submit"
-                                                class="btn btn-info btn-fill pull-right">Submit</button>
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <p class="copyright pull-right">
-                            &copy;
-                            <script>document.write(new Date().getFullYear())</script> <a
-                                href="http://www.creative-tim.com">Creative
-                                Tim</a>, made with love for a better web
-                        </p>
-                    </div>
-                </footer>
-
+                    </li>
+                    <li>
+                        <a class="nav-link" href="form.html">
+                            <i class="nc-icon nc-bell-55"></i>
+                            <p>Record Activity</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="goal.html">
+                            <i class="nc-icon nc-check-2"></i>
+                            <p>Put Your Goals</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="friends.html">
+                            <i class="nc-icon nc-badge"></i>
+                            <p>Friends</p>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <script>
-
-            var form = document.getElementById('form');
-            form.onsubmit = function (e) {
-                e.preventDefault();
-
-                var points = 0;
-                var errcode = 0;
-                if (form.drivenBool.checked == true) {
-                    if (form.drivenMinutes.value <= 0) {
-                        alert('Put something in Minutes Driven');
-                        errcode = 1;
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html"> Personal Dashboard </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nc-icon nc-zoom-split"></i>
+                                    <span class="d-lg-block">
+                                        <input type="text" placeholder="Search for friends (by email)" id="friends"
+                                            style="width: 500px; margin-left: 20px">
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto" id="content">
+                            <button class="btn btn-primary" onclick="signIn()">Facebook Sign In</button>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <script>
+                document.getElementById('friends').addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/friends',
+                            data: { command: "SELECT id, email FROM db.userdata3 WHERE email = " + "'" + document.getElementById('friends').value + "';" },
+                            success: function (t) {
+                                if (t.length == 0) {
+                                    window.alert("person does not have account");
+                                }
+                                else {
+                                    window.location.href = "friends.html";
+                                    localStorage.setItem("friendid", t[0].email)
+                                    localStorage.setItem("friendemail", t[0].id)
+                                }
+                            },
+                            error: function (t) {
+                                console.log(t);
+                            }
+                        });
                     }
-                    if (form.drivenPeople.value <= 0) {
-                        alert('there is more than one person in the car');
-                        errcode = 1;
-                    } else if (form.drivenPeople.value == 1) {
-                        points -= 100 * form.drivenMinutes.value;
-                    } else {
-                        points += 10 * form.drivenMinutes.value * form.drivenPeople.value;
+                });
+            </script>
+            <!-- End Navbar -->
+
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="header" style="text-align: center">
+                                    <h4 class="title">Enter Your Goals</h4>
+                                </div>
+                                <div class="content">
+                                    <form id="form">
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group" style="text-align: center">
+                                                    <label>Driving Goal?</label>
+                                                    <input type="checkbox" class="form-control" name="drivenBool">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Minutes Driven</label>
+                                                    <input type="number" class="form-control" name="drivenMinutes"
+                                                        placeholder="minutes">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>People in Carpool</label>
+                                                    <input type="number" class="form-control" name="drivenPeople"
+                                                        placeholder="type 1 if no carpool">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group" style="text-align: center">
+                                                    <label>Biking Goal?</label>
+                                                    <input type="checkbox" class="form-control" name="bikedBool">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Minutes Biked</label>
+                                                    <input type="number" class="form-control" name="bikedMinutes"
+                                                        placeholder="minutes">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group" style="text-align: center">
+                                                    <label>Walking Goal?</label>
+                                                    <input type="checkbox" class="form-control" name="walkedBool">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Minutes Walked</label>
+                                                    <input type="number" class="form-control" name="walkedMinutes"
+                                                        placeholder="minutes">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group" style="text-align: center">
+                                                    <label>Flying Goal?</label>
+                                                    <input type="checkbox" class="form-control" name="flownBool">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Hours Flown</label>
+                                                    <input type="number" class="form-control" name="flownMinutes"
+                                                        placeholder="hours">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>document.write(new Date().getFullYear())</script> <a
+                            href="http://www.creative-tim.com">Creative
+                            Tim</a>, made with love for a better web
+                    </p>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+
+        var form = document.getElementById('form');
+        form.onsubmit = function (e) {
+            e.preventDefault();
+
+            var points = 0;
+            var errcode = 0;
+            if (form.drivenBool.checked == true) {
+                if (form.drivenMinutes.value <= 0) {
+                    alert('Put something in Minutes Driven');
+                    errcode = 1;
+                }
+                if (form.drivenPeople.value <= 0) {
+                    alert('there is more than one person in the car');
+                    errcode = 1;
+                } else if (form.drivenPeople.value == 1) {
+                    points -= 100 * form.drivenMinutes.value;
+                } else {
+                    points += 10 * form.drivenMinutes.value * form.drivenPeople.value;
+                }
+            }
+            if (form.bikedBool.checked == true) {
+                if (form.bikedMinutes.value <= 0) {
+                    alert('Put something in Minutes Biked');
+                    errcode = 1;
+                }
+                points += 100 * form.bikedMinutes.value;
+            }
+            if (form.walkedBool.checked == true) {
+                if (form.walkedMinutes.value <= 0) {
+                    alert('Put something in Minutes Walked');
+                    errcode = 1;
+                }
+                points += 200 * form.walkedMinutes.value;
+            }
+            if (form.flownBool.checked == true) {
+                if (form.flownMinutes.value <= 0) {
+                    alert('put something in Hours Flown');
+                    errcode = 1;
+                }
+                points -= 100 * form.flownMinutes.value * 60;
+            }
+            if (errcode == 0) {
+                console.log(points);
+            }
+        };
+
+    </script>
+    <script>
+        document.getElementById('friends').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/friends',
+                    data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" },
+                    success: function (t) {
+                        console.log(t);
+                    },
+                    error: function (t) {
+                        console.log(t);
                     }
-                }
-                if (form.bikedBool.checked == true) {
-                    if (form.bikedMinutes.value <= 0) {
-                        alert('Put something in Minutes Biked');
-                        errcode = 1;
-                    }
-                    points += 100 * form.bikedMinutes.value;
-                }
-                if (form.walkedBool.checked == true) {
-                    if (form.walkedMinutes.value <= 0) {
-                        alert('Put something in Minutes Walked');
-                        errcode = 1;
-                    }
-                    points += 200 * form.walkedMinutes.value;
-                }
-                if (form.flownBool.checked == true) {
-                    if (form.flownMinutes.value <= 0) {
-                        alert('put something in Hours Flown');
-                        errcode = 1;
-                    }
-                    points -= 100 * form.flownMinutes.value * 60;
-                }
-                if (errcode == 0) {
-                    console.log(points);
-                }
-            };
+                });
+            }
+        });
+    </script>
 
-        </script>
-        <script>
-            document.getElementById('friends').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/friends',
-                        data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" },
-                        success: function (t) {
-                            console.log(t);
-                        },
-                        error: function (t) {
-                            console.log(t);
-                        }
-                    });
-                }
-            });
-        </script>
+</body>
 
-    </body>
+<!--   Core JS Files   -->
+<script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-    <!--   Core JS Files   -->
-    <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<!--  Charts Plugin -->
+<script src="assets/js/chartist.min.js"></script>
 
-    <!--  Charts Plugin -->
-    <script src="assets/js/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/bootstrap-notify.js"></script>
 
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-
-    <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-    <script src="assets/js/demo.js"></script>
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="assets/js/demo.js"></script>
 
 </html>
