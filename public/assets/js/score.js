@@ -22,7 +22,7 @@ var form = document.getElementById('form');
                         alert('there is more than one person in the car');
                         errcode = 1;
                     } else if (form.drivenPeople.value == 1) {
-                        points -= 100 * form.drivenMinutes.value;
+                        points -= form.drivenMinutes.value;
                     } else {
                         points += 10 * form.drivenMinutes.value * form.drivenPeople.value;
                     }
@@ -46,8 +46,9 @@ var form = document.getElementById('form');
                         alert('put something in Hours Flown');
                         errcode = 1;
                     }
-                    points -= 100 * form.flownMinutes.value * 60;
+                    points -= 100 * form.flownMinutes.value;
                 }
+                points = Math.max(0,points)
                 console.log(form);
                 if (errcode == 0 && localStorage.getItem("email") != null) {
                     console.log(points);
