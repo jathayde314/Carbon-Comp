@@ -31,7 +31,7 @@
                 -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="#" class="simple-text">
+                    <a href="index.html" class="simple-text">
                         Carbon Comp
                     </a>
                 </div>
@@ -129,8 +129,8 @@
                                                 },
                                                 success: function (t) {
                                                     if (t.length == 0) {
-                                                        query = "INSERT INTO db.friend_requests (email, email_request) VALUES ('" + localStorage.getItem("friendemail") + 
-                                                        "', '" + localStorage.getItem("email") + "');"; 
+                                                        query = "INSERT INTO db.friend_requests (email, email_request) VALUES ('" + localStorage.getItem("friendemail") +
+                                                            "', '" + localStorage.getItem("email") + "');";
                                                         console.log(query);
                                                         $.ajax({
                                                             type: 'POST',
@@ -167,67 +167,91 @@
                         <div class="col-md-12">
                             <div class="card card-plain">
                                 <div class="header">
-                                    <h4 class="title" style="text-align: center"> Friend Leaderboard </h4>
+                                    <h4 class="title" style="text-align: center"> Friend Request </h4>
                                 </div>
                                 <div class="content table-responsive">
                                     <table class="table table-hover">
                                         <thead>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Salary</th>
-                                            <th>Country</th>
-                                            <th>City</th>
+                                            <th>Requester Email</th>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td>Sinaai-Waas</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
-                                                <td>Baileux</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>$38,735</td>
-                                                <td>Korea, South</td>
-                                                <td>Overland Park</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Doris Greene</td>
-                                                <td>$63,542</td>
-                                                <td>Malawi</td>
-                                                <td>Feldkirchen in Kärnten</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Mason Porter</td>
-                                                <td>$78,615</td>
-                                                <td>Chile</td>
-                                                <td>Gloucester</td>
+                                                <td id="friend_requests">No Friend Requests</td>
                                             </tr>
                                         </tbody>
                                     </table>
-
+                                    <button id="accept_friend_request">Accept Friend Request</button>
+                                    <button id="decline_friend_request">Decline Friend Request</button>
                                 </div>
                             </div>
                         </div>
-
+                        <script>
+                            query = "SELECT * FROM (SELECT id, email, email_request, ROW_NUMBER() OVER (PARTITION BY \
+                            email, email_request) row_num FROM db.friend_requests) WHERE row_num < 2 AND email = '" +
+                                localStorage.getItem("email") + "';";
+                            console.log(query);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/friends',
+                                data: { command: query },
+                                success: function (t) {
+                                    var res = t[0];
+                                    localStorage.setItem("friend_request1", res.email_request);
+                                },
+                                error: function (t) {
+                                    console.log(t);
+                                }
+                            });
+                            var form = document.getElementById('friend_requests');
+                            form.innerText = localStorage.getItem("friend_request1");
+                        </script>
+                        <script>
+                            document.getElementById('accept_friend_request').addEventListener('click', function (e) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/submit-element',
+                                    data: {
+                                        command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
+                                    },
+                                    success: function (t) {
+                                        window.alert("Friend request accepted")
+                                        localStorage.setItem("friend_request1", "");
+                                    },
+                                    error: function (t) {
+                                        console.log(t);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/submit-element',
+                                    data: {
+                                        command: "INSERT INTO db.friends (email, email_friend) VALUES ('" + localStorage.getItem("email") + 
+                                        "','" + localStorage.getItem("friend_request1") + "');"
+                                    },
+                                    success: function (t) {
+                                        window.alert("Friend request accepted")
+                                    },
+                                    error: function (t) {
+                                        console.log(t);
+                                    }
+                                });
+                            });
+                            document.getElementById('decline_friend_request').addEventListener('click', function (e) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/submit-element',
+                                    data: {
+                                        command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
+                                    },
+                                    success: function (t) {
+                                        window.alert("Friend request accepted")
+                                    },
+                                    error: function (t) {
+                                        console.log(t);
+                                    }
+                                });
+                            });
+                        </script>
 
                     </div>
                 </div>
