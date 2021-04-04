@@ -9,6 +9,6 @@ app.get('/', (req, res) => {
 app.use(express.static(__dirname + '/public'));
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening at https://localhost:${port}`)
 })
