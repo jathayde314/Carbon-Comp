@@ -37,13 +37,13 @@
                         </a>
                     </div>
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" href="leaderboard.html">
                                 <i class="nc-icon nc-icon nc-paper-2"></i>
                                 <p>Leaderboard</p>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li>
                             <a class="nav-link" href="form.html">
                                 <i class="nc-icon nc-bell-55"></i>
                                 <p>Record Activity</p>
@@ -179,32 +179,28 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <p class="copyright pull-right">
-                            &copy;
-                            <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative
-                                Tim</a>, made with love for a better web
-                        </p>
-                    </div>
-                </footer>
-
             </div>
         </div>
 
         <script>
-
             var form = document.getElementById('form');
             form.onsubmit = function (e) {
                 e.preventDefault();
 
                 var points = 0;
                 var errcode = 0;
+                var driven;
+                var drivenMinutes;
+                var drivenPeople;
+                var biked;
+                var bikedMinutes;
+                var walked;
+                var walkedMinutes;
+                var flown;
+                var flownMinutes;
                 if (form.drivenBool.checked == true) {
                     if (form.drivenMinutes.value <= 0) {
                         alert('Put something in Minutes Driven');
@@ -240,9 +236,32 @@
                     }
                     points -= 100 * form.flownMinutes.value * 60;
                 }
-                if (errcode == 0) {
+                if (errcode == 0 && localStorage.getItem("email") != null) {
                     console.log(points);
+                    var driven = form.drivenBool.checked ? 1 : 0;
+                    var drivenMinutes = form.drivenMinutes.value;
+                    var drivenPeople = form.drivenPeople.value;
+                    var biked = form.bikedBool.checked ? 1 : 0;
+                    var bikedMinutes = form.bikedMinutes.value;
+                    var walked = form.walkedBool.checked ? 1 : 0;
+                    var walkedMinutes = form.walkedMinutes.value;
+                    var flown = form.flownBool.checked ? 1 : 0;
+                    var flownMinutes = form.flownMinutes.value;
+                    function myFunction() {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/submit-element',
+                            data: {command: "INSERT INTO test.names2(lastname, firstname) VALUES ('zhu', 'd');" },
+                            success: function (t) {
+                                window.alert("Successfully submitted");
+                            },
+                            error: function (t) {
+                                window.alert("no");
+                            }
+                        });
+                    }
                 }
+
             };
 
         </script>
