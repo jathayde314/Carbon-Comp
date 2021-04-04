@@ -92,12 +92,12 @@
                         $.ajax({
                             type: 'POST',
                             url: '/friends',
-                            data: { command: "SELECT email FROM db.userdata;" },
+                            data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';"},
                             success: function (t) {
-                                window.alert(t);
                                 console.log(t);
                             },
                             error: function (t) {
+                                console.log(t);
                             }
                         });
                     }

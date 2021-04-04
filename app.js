@@ -35,14 +35,15 @@ router.post('/submit-element', async (req, res, next) => {
 router.post('/friends', async (req, res, next) => {
     var data_results;
     text = req.body.command;
+    console.log(text);
     pool.query(text, (error, results) => {
         if (error) {
             throw error
         }
-        console.log(data_results);
         data_results = results.rows;
+        console.log(data_results);
+        res.send(data_results);
     }) 
-    res.json(data_results);
 });
 
 module.exports = router;
