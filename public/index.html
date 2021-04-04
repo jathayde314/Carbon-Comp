@@ -109,27 +109,59 @@
                                     <canvas class="chart1" id="progressChart" width="400" height="400"></canvas>
 
                                     <script>
-                                        var ctx = document.getElementById('progressChart');
-                                        const data = {
-                                            labels: [
-                                                'Goal Remaining',
-                                                'Progress',
-                                            ],
-                                            datasets: [{
-                                                label: 'My First Dataset',
-                                                data: [100, 25],
-                                                backgroundColor: [
-                                                    'rgb(118,236,132)',
-                                                    'rgb(21,113,143)',
-                                                ],
-                                                hoverOffset: 4
-                                            }]
-                                        };
-                                        var myChart = new Chart(ctx, {
-                                            type: 'doughnut',
-                                            data: data,
+                                        var email = localStorage.getItem("email");
+                                        // var q = "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" ;
+                                        var q = 'select (db.usergoals.goal, db.userdata3.score) from db.usergoals join db.userdata3 on db.usergoals.email = db.userdata3.email AND db.usergoals.email=\''+email+'\';\n';
+                                        console.log(email);
+                                        console.log(q);
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/friends',
+                                            data: { command: q},
+                                            // data:{command:'select (db.usergoals.goal, db.userdata3.score) from db.usergoals join db.userdata3 on db.usergoals.email = db.userdata3.email AND db.usergoals.email=\''+email+'\';\n'},
+                                            success: function (t) {
+                                                console.log("HELLLLO");
+                                                console.log(t);
+                                                console.log(typeof(t));
+                                                if (t[0] != undefined){
+                                                    console.log(t[0]);
+                                                    var vals = t[0]['?column?'];
+                                                    var strvals = vals.slice(1,vals.length-1);
+                                                    pos = strvals.indexOf(',');
+                                                    var num1 = parseInt(strvals.slice(0,pos));
+                                                    var num2 = parseInt(strvals.slice(pos+1,strvals.length));
+                                                    num1 = Math.max(num1,0);
+                                                    num2 = Math.max(num2,0);
+                                                    console.log(num1,num2);
+                                                    var ctx = document.getElementById('progressChart');
+                                                    const data = {
+                                                        labels: [
+                                                            'Goal Remaining',
+                                                            'Progress',
+                                                        ],
+                                                        datasets: [{
+                                                            label: 'My First Dataset',
+                                                            data: [num1, num2],
+                                                            backgroundColor: [
+                                                                'rgb(118,236,132)',
+                                                                'rgb(21,113,143)',
+                                                            ],
+                                                            hoverOffset: 4
+                                                        }]
+                                                    };
+                                                    var myChart = new Chart(ctx, {
+                                                        type: 'doughnut',
+                                                        data: data,
 
+                                                    });
+                                                }
+
+                                                },
+                                            error: function (t) {
+                                                console.log(t);
+                                            }
                                         });
+
                                     </script>
                                 </div>
                             </div>
