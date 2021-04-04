@@ -23,6 +23,7 @@ const pool = new Pool({
 
 router.post('/submit-element', async (req, res, next) => {
     text = req.body.command;
+    console.log(text);
     pool.query(text, (error, results) => {
         if (error) {
             throw error

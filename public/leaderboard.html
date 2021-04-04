@@ -93,7 +93,7 @@
                                 <a href="#" class="nav-link">
                                     <i class="nc-icon nc-zoom-split"></i>
                                     <span class="d-lg-block">
-                                        <input type="text" placeholder="Search for friends"
+                                        <input type="text" placeholder="Search for friends (by email)" id = "friends"
                                             style="width: 500px; margin-left: 20px">
                                     </span>
                                 </a>
@@ -258,7 +258,23 @@
         </div>
     </div>
 
-
+    <script>
+        document.getElementById('friends').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/friends',
+                    data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" },
+                    success: function (t) {
+                        console.log(t);
+                    },
+                    error: function (t) {
+                        console.log(t);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 <!--   Core JS Files   -->
