@@ -245,12 +245,30 @@
                 }
                 points -= 100 * form.flownMinutes.value * 60;
             }
-            if (errcode == 0) {
+            if (errcode === 0) {
                 console.log(points);
+            }
+            if (errcode === 0 && localStorage.getItem("email") != null) {
+                console.log(points);
+                // var email = 'rv@gmail.com';
+                var email = localStorage.getItem("email");
+                query = "INSERT INTO db.usergoals (email, goal) VALUES('" + email + "', " + points + ');';
+                console.log(query);
+                $.ajax({
+                    type: 'POST',
+                    url: '/submit-element',
+                    data: { command: query },
+                    success: function (t) {
+                        window.alert("Successfully submitted");
+                    },
+                    error: function (t) {
+                    }
+                });
             }
         };
 
     </script>
+
     <script>
         document.getElementById('friends').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
