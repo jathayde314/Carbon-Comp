@@ -48,7 +48,7 @@ var form = document.getElementById('form');
                     }
                     points -= 100 * form.flownMinutes.value;
                 }
-                points = max(0,points)
+                points = Math.max(0,points)
                 console.log(form);
                 if (errcode == 0 && localStorage.getItem("email") != null) {
                     console.log(points);
