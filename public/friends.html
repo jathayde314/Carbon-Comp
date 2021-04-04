@@ -86,9 +86,6 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav ml-auto" id="content">
-                            <button class="btn btn-primary" onclick="signIn()">Facebook Sign In</button>
-                        </ul>
                     </div>
                 </div>
             </nav>
@@ -167,7 +164,7 @@
                         <div class="col-md-12">
                             <div class="card card-plain">
                                 <div class="header">
-                                    <h4 class="title" style="text-align: center"> Friend Request </h4>
+                                    <h4 class="title" style="text-align: center"> Friend Requests (if any)</h4>
                                 </div>
                                 <div class="content table-responsive">
                                     <table class="table table-hover">
@@ -190,72 +187,154 @@
                             email, email_request) row_num FROM db.friend_requests) WHERE row_num < 2 AND email = '" +
                                 localStorage.getItem("email") + "';";
                             console.log(query);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/friends',
-                                data: { command: query },
-                                success: function (t) {
-                                    var res = t[0];
-                                    localStorage.setItem("friend_request1", res.email_request);
-                                },
-                                error: function (t) {
-                                    console.log(t);
+                            if (typeof localStorage.getItem("email") != "undefined") {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/friends',
+                                    data: { command: query },
+                                    success: function (t) {
+                                        var res = t[0];
+                                        console.log(res);
+                                        if (typeof res != "undefined") {
+                                            localStorage.setItem("friend_request1", res.email_request);
+                                        }
+                                    },
+                                    error: function (t) {
+                                        console.log(t);
+                                    }
+                                });
+                                var form = document.getElementById('friend_requests');
+                                if (typeof form != "undefined") {
+                                    form.innerText = localStorage.getItem("friend_request1");
                                 }
-                            });
-                            var form = document.getElementById('friend_requests');
-                            form.innerText = localStorage.getItem("friend_request1");
+                            }
                         </script>
                         <script>
-                            document.getElementById('accept_friend_request').addEventListener('click', function (e) {
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/submit-element',
-                                    data: {
-                                        command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
-                                    },
-                                    success: function (t) {
-                                        window.alert("Friend request accepted")
-                                        localStorage.setItem("friend_request1", "");
-                                    },
-                                    error: function (t) {
-                                        console.log(t);
-                                    }
+                            if (typeof localStorage.getItem("friend_request1") != "undefined" && typeof localStorage.getItem("email") != "undefined") {
+                                document.getElementById('accept_friend_request').addEventListener('click', function (e) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/submit-element',
+                                        data: {
+                                            command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
+                                        },
+                                        success: function (t) {
+                                            window.alert("Friend request accepted")
+                                            localStorage.setItem("friend_request1", "");
+                                        },
+                                        error: function (t) {
+                                            console.log(t);
+                                        }
+                                    });
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/submit-element',
+                                        data: {
+                                            command: "INSERT INTO db.friends (email, email_friend) VALUES ('" + localStorage.getItem("email") +
+                                                "','" + localStorage.getItem("friend_request1") + "');"
+                                        },
+                                        success: function (t) {
+                                        },
+                                        error: function (t) {
+                                            console.log(t);
+                                        }
+                                    });
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/submit-element',
+                                        data: {
+                                            command: "INSERT INTO db.friends (email, email_friend) VALUES ('" + localStorage.getItem("friend_request1") +
+                                                "','" + localStorage.getItem("email") + "');"
+                                        },
+                                        success: function (t) {
+                                        },
+                                        error: function (t) {
+                                            console.log(t);
+                                        }
+                                    });
                                 });
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/submit-element',
-                                    data: {
-                                        command: "INSERT INTO db.friends (email, email_friend) VALUES ('" + localStorage.getItem("email") + 
-                                        "','" + localStorage.getItem("friend_request1") + "');"
-                                    },
-                                    success: function (t) {
-                                        window.alert("Friend request accepted")
-                                    },
-                                    error: function (t) {
-                                        console.log(t);
-                                    }
+                            }
+                            if (typeof localStorage.getItem("friend_request1") != "undefined") {
+                                document.getElementById('decline_friend_request').addEventListener('click', function (e) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/submit-element',
+                                        data: {
+                                            command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
+                                        },
+                                        success: function (t) {
+                                            window.alert("Friend request declined")
+                                        },
+                                        error: function (t) {
+                                            console.log(t);
+                                        }
+                                    });
                                 });
-                            });
-                            document.getElementById('decline_friend_request').addEventListener('click', function (e) {
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/submit-element',
-                                    data: {
-                                        command: "DELETE FROM db.friend_requests WHERE email_request = '" + localStorage.getItem("friend_request1") + "';"
-                                    },
-                                    success: function (t) {
-                                        window.alert("Friend request accepted")
-                                    },
-                                    error: function (t) {
-                                        console.log(t);
-                                    }
-                                });
-                            });
+                            }
                         </script>
-
+                        <div class="col-md-12">
+                            <div class="card card-plain">
+                                <div class="header">
+                                    <h4 class="title" style="text-align: center"> Friend List</h4>
+                                </div>
+                                <div class="content table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th>Friend Email</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="friends1">No Friend 1</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="friends2">No Friend 2</td>
+                                            </tr>
+                                            <tr>
+                                                <td id="friends3">No Friend 3</td>
+                                            </tr>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <script>
+                                        if (typeof localStorage.getItem("email") != "undefined") {
+                                            query = "SELECT * FROM (SELECT id, email, email_friend, ROW_NUMBER() OVER (PARTITION BY email, email_friend)"
+                                                + "row_num FROM db.friends) WHERE row_num < 2 AND email = '" + localStorage.getItem("email") + "';"
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/friends',
+                                                data: {
+                                                    command: query
+                                                },
+                                                success: function (t) {
+                                                    if (typeof t[0] != "undefined") {
+                                                        localStorage.setItem("friends1", t[0].email_friend);
+                                                        var friend1 = document.getElementById('friends1');
+                                                        friend1.innerText = localStorage.getItem("friends1");
+                                                    }
+                                                    if (typeof t[1] != "undefined") {
+                                                        localStorage.setItem("friends2", t[1].email_friend);
+                                                        var friend2 = document.getElementById('friends2');
+                                                        friend2.innerText = localStorage.getItem("friends2");
+                                                    }
+                                                    if (typeof t[2] != "undefined") {
+                                                        localStorage.setItem("friends3", t[2].email_friend);
+                                                        var friend2 = document.getElementById('friends2');
+                                                        friend2.innerText = localStorage.getItem("friends2");
+                                                    }
+                                                },
+                                                error: function (t) {
+                                                    console.log(t);
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <footer class="footer">
                 <div class="container-fluid">
