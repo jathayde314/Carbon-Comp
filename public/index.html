@@ -25,18 +25,18 @@
     <div class="wrapper">
         <div class="sidebar" data-color="green" data-image="/assets/img/sidebar-5.jpg">
             <!--
-                            Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-                    
-                            Tip 2: you can also add an image using data-image tag
-                        -->
+            Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+    
+            Tip 2: you can also add an image using data-image tag
+        -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="#" class="simple-text">
+                    <a href="index.html" class="simple-text">
                         Carbon Comp
                     </a>
                 </div>
                 <ul class="nav">
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="leaderboard.html">
                             <i class="nc-icon nc-icon nc-paper-2"></i>
                             <p>Leaderboard</p>
@@ -50,14 +50,8 @@
                     </li>
                     <li>
                         <a class="nav-link" href="goal.html">
-                            <i class="nc-icon nc-check-2"></i>
+                            <i class="nc-icon nc-bell-55"></i>
                             <p>Put Your Goals</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="friends.html">
-                            <i class="nc-icon nc-badge"></i>
-                            <p>Friends</p>
                         </a>
                     </li>
                 </ul>
@@ -80,7 +74,7 @@
                                 <a href="#" class="nav-link">
                                     <i class="nc-icon nc-zoom-split"></i>
                                     <span class="d-lg-block">
-                                        <input type="text" placeholder="Search for friends"
+                                        <input type="text" placeholder="Search for friends (by email)"
                                             style="width: 500px; margin-left: 20px" id="friends">
                                     </span>
                                 </a>
@@ -98,9 +92,15 @@
                         $.ajax({
                             type: 'POST',
                             url: '/friends',
-                            data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';"},
+                            data: { command: "SELECT id, email, username FROM db.userdata2 WHERE email = " + "'" + document.getElementById('friends').value + "';"},
                             success: function (t) {
+                                if (t == []) {
+                                    window.alert("")
+                                }
                                 console.log(t);
+                                localStorage.setItem("friendid", data[0]['id'])
+                                localStorage.setItem("friendemail", data[0]['email'])
+                                localStorage.setItem("friendusername", data[0]['username'])
                             },
                             error: function (t) {
                                 console.log(t);
@@ -161,7 +161,21 @@
                                     
                                     <script>
                                         var ctx = document.getElementById('chartActivity');
-                                        
+                                        const data = {
+                                            labels: [
+                                                'Goal',
+                                                'Progress',
+                                            ],
+                                            datasets: [{
+                                                label: 'My First Dataset',
+                                                data: [100, 25],
+                                                backgroundColor: [
+                                                    'rgb(118,236,132)',
+                                                    'rgb(21,113,143)',
+                                                ],
+                                                hoverOffset: 4
+                                            }]
+                                        };
                                         var myChart = new Chart(ctx, {
                                             type: 'line',
                                             data: data,

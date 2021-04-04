@@ -81,8 +81,8 @@
                                     <a href="#" class="nav-link">
                                         <i class="nc-icon nc-zoom-split"></i>
                                         <span class="d-lg-block">
-                                            <input type="text" placeholder="Search for friends"
-                                                style="width: 500px; margin-left: 20px">
+                                            <input type="text" placeholder="Search for friends (by email)"
+                                                style="width: 500px; margin-left: 20px" id = "friends">
                                         </span>
                                     </a>
                                 </li>
@@ -178,7 +178,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-info btn-fill pull-right"
-                                                id = "clicked">Submit (click until alert pops up)</button>
+                                                id="clicked">Submit (click until alert pops up)</button>
 
                                             <div class="clearfix"></div>
                                         </form>
@@ -257,27 +257,41 @@
                     var flownMinutes = form.flownMinutes.value ? form.flownMinutes.value : 0;
 
                     var email = localStorage.getItem("email");
-                    query = "INSERT INTO db.userdata (email, score, drive, minutes_driven, people_in_car, \
-                    bike, minutes_biked, walk, minutes_walked, fly, minutes_flown) VALUES('" + email + "', '" + points + "', '" + 
+                    query = "INSERT INTO db.userdata3 (email, score, drive, minutes_driven, people_in_car, \
+                    bike, minutes_biked, walk, minutes_walked, fly, minutes_flown, date) VALUES('" + email + "', '" + points + "', '" +
                         driven + "', '" + drivenMinutes + "', '" + drivenPeople + "', '" + biked + "', '" +
-                        bikedMinutes + "', '" + walked + "', '" + walkedMinutes + "', '" + flown + "', '" + flownMinutes + "');";
+                        bikedMinutes + "', '" + walked + "', '" + walkedMinutes + "', '" + flown + "', '" + flownMinutes + "', '" + "" +");";
                     console.log(query);
-
-                    function myFunction() {
-                        $.ajax({
-                            type: 'POST',
-                            url: '/submit-element',
-                            data: { command: query },
-                            success: function (t) {
-                                window.alert("Successfully submitted");
-                            },
-                            error: function (t) {
-                            }
-                        });
-                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/submit-element',
+                        data: { command: query },
+                        success: function (t) {
+                            window.alert("Successfully submitted");
+                        },
+                        error: function (t) {
+                        }
+                    });
                 }
 
             };
+        </script>
+        <script>
+            document.getElementById('friends').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/friends',
+                        data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" },
+                        success: function (t) {
+                            console.log(t);
+                        },
+                        error: function (t) {
+                            console.log(t);
+                        }
+                    });
+                }
+            });
         </script>
     </body>
 
