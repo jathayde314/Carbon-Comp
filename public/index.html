@@ -92,14 +92,16 @@
                         $.ajax({
                             type: 'POST',
                             url: '/friends',
-                            data: { command: "SELECT id, email FROM db.userdata3 WHERE email = " + "'" + document.getElementById('friends').value + "';"},
+                            data: { command: "SELECT id, email FROM db.userdata3 WHERE email = " + "'" + document.getElementById('friends').value + "';" },
                             success: function (t) {
-                                if (t == []) {
-                                    window.alert("")
+                                if (t.length == 0) {
+                                    window.alert("person does not have account");
                                 }
-                                console.log(t);
-                                localStorage.setItem("friendid", data[0]['id'])
-                                localStorage.setItem("friendemail", data[0]['email'])
+                                else {
+                                    window.location.href = "friends.html";
+                                    localStorage.setItem("friendid", t[0].email)
+                                    localStorage.setItem("friendemail", t[0].id)
+                                }
                             },
                             error: function (t) {
                                 console.log(t);
@@ -121,7 +123,7 @@
 
                                 <div class="content">
                                     <canvas class="chart1" id="progressChart" width="400" height="400"></canvas>
-                                    
+
                                     <script>
                                         var ctx = document.getElementById('progressChart');
                                         const data = {
@@ -157,7 +159,7 @@
 
                                 <div class="content">
                                     <canvas class="chart1" id="chartActivity" width="400" height="400"></canvas>
-                                    
+
                                     <script>
                                         var ctx = document.getElementById('chartActivity');
                                         const data = {
