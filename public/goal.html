@@ -206,7 +206,7 @@
                     } else if (form.drivenPeople.value == 1) {
                         points -= 100 * form.drivenMinutes.value;
                     } else {
-                        points += 100 * form.drivenMinutes.value / form.drivenPeople.value;
+                        points += 10 * form.drivenMinutes.value * form.drivenPeople.value;
                     }
                 }
                 if (form.bikedBool.checked == true) {
