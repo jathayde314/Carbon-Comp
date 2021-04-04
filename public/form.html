@@ -215,23 +215,6 @@
 
 
         <script src="./assets/js/score.js"> </script>
-        <script>
-            document.getElementById('friends').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/friends',
-                        data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';" },
-                        success: function (t) {
-                            console.log(t);
-                        },
-                        error: function (t) {
-                            console.log(t);
-                        }
-                    });
-                }
-            });
-        </script>
     </body>
 
     <!--   Core JS Files   -->
