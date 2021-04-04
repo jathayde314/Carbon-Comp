@@ -29,7 +29,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/submit-element',
-                data: {command: "SELECT * FROM test.names2;"},
+                data: {command: "INSERT INTO test.names2(lastname, firstname) VALUES ('zhu', 'd');"},
                 success: function (t) {
                     window.alert("yes");
                 },
