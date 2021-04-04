@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<canvas class="chart1" id="myChart" width="400" height="400"></canvas>
+
+<script>
+    var ctx = document.getElementById('myChart');
+    const data = {
+        labels: [
+            'Goal',
+            'Progress',
+        ],
+        datasets: [{
+            label: 'My First Dataset',
+            data: [75,25],
+            backgroundColor: [
+                'rgb(118,236,132)',
+                'rgb(21,113,143)',
+            ],
+            hoverOffset: 4
+        }]
+    };
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+
+    });
+</script>
+</body>
+</html>
