@@ -81,7 +81,7 @@
                                     <i class="nc-icon nc-zoom-split"></i>
                                     <span class="d-lg-block">
                                         <input type="text" placeholder="Search for friends"
-                                            style="width: 500px; margin-left: 20px">
+                                            style="width: 500px; margin-left: 20px" id="friends">
                                     </span>
                                 </a>
                             </li>
@@ -92,6 +92,23 @@
                     </div>
                 </div>
             </nav>
+            <script>
+                document.getElementById('friends').addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/friends',
+                            data: { command: "SELECT email FROM db.userdata WHERE email = " + "'" + document.getElementById('friends').value + "';"},
+                            success: function (t) {
+                                console.log(t);
+                            },
+                            error: function (t) {
+                                console.log(t);
+                            }
+                        });
+                    }
+                });
+            </script>
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">
@@ -161,7 +178,8 @@
                 <div class="container-fluid">
                     <p class="copyright pull-right">
                         &copy;
-                        <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative
+                        <script>document.write(new Date().getFullYear())</script> <a
+                            href="http://www.creative-tim.com">Creative
                             Tim</a>, made with love for a better web
                     </p>
                 </div>

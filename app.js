@@ -32,4 +32,18 @@ router.post('/submit-element', async (req, res, next) => {
     res.status(200).json({ status: 'ok' });
 });
 
+router.post('/friends', async (req, res, next) => {
+    var data_results;
+    text = req.body.command;
+    console.log(text);
+    pool.query(text, (error, results) => {
+        if (error) {
+            throw error
+        }
+        data_results = results.rows;
+        console.log(data_results);
+        res.send(data_results);
+    }) 
+});
+
 module.exports = router;
