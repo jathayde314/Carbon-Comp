@@ -92,7 +92,7 @@
                         $.ajax({
                             type: 'POST',
                             url: '/friends',
-                            data: { command: "SELECT id, email, username FROM db.userdata2 WHERE email = " + "'" + document.getElementById('friends').value + "';"},
+                            data: { command: "SELECT id, email FROM db.userdata3 WHERE email = " + "'" + document.getElementById('friends').value + "';"},
                             success: function (t) {
                                 if (t == []) {
                                     window.alert("")
@@ -100,7 +100,6 @@
                                 console.log(t);
                                 localStorage.setItem("friendid", data[0]['id'])
                                 localStorage.setItem("friendemail", data[0]['email'])
-                                localStorage.setItem("friendusername", data[0]['username'])
                             },
                             error: function (t) {
                                 console.log(t);

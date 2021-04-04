@@ -264,6 +264,7 @@
                     }
                     points -= 100 * form.flownMinutes.value * 60;
                 }
+                console.log(form);
                 if (errcode == 0 && localStorage.getItem("email") != null) {
                     console.log(points);
                     var driven = form.drivenBool.checked ? 1 : 0;
@@ -277,10 +278,12 @@
                     var flownMinutes = form.flownMinutes.value ? form.flownMinutes.value : 0;
 
                     var email = localStorage.getItem("email");
+                    var date = String(form.yearField.value) + "-" + String(form.monthField.value) + "-" + String(form.dayField.value);
+                    console.log(date);
                     query = "INSERT INTO db.userdata3 (email, score, drive, minutes_driven, people_in_car, \
-                    bike, minutes_biked, walk, minutes_walked, fly, minutes_flown, date) VALUES('" + email + "', '" + points + "', '" +
+                    bike, minutes_biked, walk, minutes_walked, fly, minutes_flowndate, date) VALUES('" + email + "', '" + points + "', '" +
                         driven + "', '" + drivenMinutes + "', '" + drivenPeople + "', '" + biked + "', '" +
-                        bikedMinutes + "', '" + walked + "', '" + walkedMinutes + "', '" + flown + "', '" + flownMinutes + "', '" + "" +");";
+                        bikedMinutes + "', '" + walked + "', '" + walkedMinutes + "', '" + flown + "', '" + flownMinutes + "', '" + date +"');";
                     console.log(query);
                     $.ajax({
                         type: 'POST',
