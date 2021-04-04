@@ -116,54 +116,39 @@
                                 <div class="content table-responsive">
                                     <table class="table table-hover table-striped">
                                         <thead>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Salary</th>
-                                            <th>Country</th>
-                                            <th>City</th>
+                                            <th>Rank</th>
+                                            <th>Username</th>
+                                            <th>Score</th>
+
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
+                                                <td id="i1"></td>
+                                                <td id="p1"></td>
+                                                <td id="s1"></td>
                                             </tr>
                                             <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td>Sinaai-Waas</td>
+                                                <td id="i2"></td>
+                                                <td id="p2"></td>
+                                                <td id="s2"></td>
                                             </tr>
                                             <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
-                                                <td>Baileux</td>
+                                                <td id="i3"></td>
+                                                <td id="p3"></td>
+                                                <td id="s3"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>$38,735</td>
-                                                <td>Korea, South</td>
-                                                <td>Overland Park</td>
+                                                <td id="i4"></td>
+                                                <td id="p4"></td>
+                                                <td id="s4"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>5</td>
-                                                <td>Doris Greene</td>
-                                                <td>$63,542</td>
-                                                <td>Malawi</td>
-                                                <td>Feldkirchen in Kärnten</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Mason Porter</td>
-                                                <td>$78,615</td>
-                                                <td>Chile</td>
-                                                <td>Gloucester</td>
+                                                <td id="i5"></td>
+                                                <td id="p5"></td>
+                                                <td id="s5"></td>
+
                                             </tr>
                                         </tbody>
                                     </table>
@@ -205,6 +190,33 @@
                 });
             }
         });
+    </script>
+
+    <script>
+        console.log("HELLO WORLD");
+        var q = 'select email, SUM(score) FROM db.userdata3 group by email order by sum DESC limit 5;';
+        console.log(q);
+        $.ajax({
+            type: 'POST',
+            url: '/friends',
+            data: { command: q},
+            success: function (t) {
+                console.log(t);
+                for (i = 1; i <= 5; i++){
+                    var current = t[i-1];
+                    var rname = 'i' + i;
+                    var cname = 'p'+i;
+                    var cscore = 's'+i;
+                    document.getElementById(rname).innerText = i;
+                    document.getElementById(cname).innerText = current['email'];
+                    document.getElementById(cscore).innerText = current['sum'];
+                }
+            },
+            error: function (t) {
+                console.log(t);
+            }
+        });
+
     </script>
 </body>
 

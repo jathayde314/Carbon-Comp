@@ -137,7 +137,7 @@
                                                     var ctx = document.getElementById('progressChart');
                                                     const data = {
                                                         labels: [
-                                                            'Goal Remaining',
+                                                            'Goal',
                                                             'Progress',
                                                         ],
                                                         datasets: [{
@@ -163,42 +163,6 @@
                                             }
                                         });
 
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="header" style="text-align: center">
-                                    <h4 class="title">Past Activity</h4>
-                                </div>
-
-                                <div class="content">
-                                    <canvas class="chart1" id="chartActivity" width="400" height="400"></canvas>
-
-                                    <script>
-                                        var ctx = document.getElementById('chartActivity');
-                                        const data = {
-                                            labels: [
-                                                'Goal',
-                                                'Progress',
-                                            ],
-                                            datasets: [{
-                                                label: 'My First Dataset',
-                                                data: [100, 25],
-                                                backgroundColor: [
-                                                    'rgb(118,236,132)',
-                                                    'rgb(21,113,143)',
-                                                ],
-                                                hoverOffset: 4
-                                            }]
-                                        };
-                                        var myChart = new Chart(ctx, {
-                                            type: 'line',
-                                            data: data,
-
-                                        });
                                     </script>
                                 </div>
                             </div>
