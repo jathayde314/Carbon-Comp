@@ -69,8 +69,9 @@
                                 </a>
                             </li>
                         </ul>
+
                         <ul class="navbar-nav ml-auto">
-                                <button onclick="signIn()">Facebook Sign In</button>
+                            <button onclick="signIn()">Facebook Sign In</button>
                         </ul>
                     </div>
                 </div>
@@ -200,8 +201,8 @@
                 var accessToken = credential.accessToken;
                 var res = result.user.uid;
                 var email = result.user.email;
-                console.log(email);
-                // ... 
+                localStorage.setItem("email", email);
+                console.log(result);
             }).catch((error) => {
                 // Handle Errors here.
                 var errorCode = error.code;
