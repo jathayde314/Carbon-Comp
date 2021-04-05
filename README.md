@@ -1,13 +1,12 @@
 # Combat Carbon Repository
 
-Here is the link to our devpost: <a href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">link</a>. You can find further information there. 
-
 To test our app on the web, you can test it <a href = "https://boiling-beach-74341.herokuapp.com/">here</a>. If you want to use it locally, you should have node.js installed. Then, you can clone the repo and run
 ```
 npm install
 node server.js
 ```
-in your directory to get the app running on port 3000 of your local host.
+in your directory to get the app running on port 3000 of your local host. Here is the link to our devpost: <a href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">link</a>. You can find further information there. 
+
 
 ## Inspiration
 Climate Change has been a very important environmental issue for several decades, and one of the main contributors to global warming has been carbon dioxide emissions from transportation. Airplanes and other aviation vehicles contribute to billions of tonnes of CO2 alone. We believe that everyone should try to reduce their carbon footprint by seeking alternative means of transport, such as biking, walking, or even carpooling. Therefore, we created a web app called Combat Carbon, an online competition that incentivizes people to try more climate friendly transportation.
