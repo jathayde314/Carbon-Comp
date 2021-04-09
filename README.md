@@ -5,7 +5,7 @@ To test our app on the web, you can test it <a href = "https://boiling-beach-743
 npm install
 node server.js
 ```
-in your directory to get the app running on port 3000 of your local host. Here is the link to our devpost: <a href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO">link</a>. You can find further information there. 
+in your directory to get the app running on port 3000 of your local host. Here is the link to our devpost: <a href = "https://devpost.com/software/carbon-competition">link</a>. You can find further information there. 
 
 
 ## Inspiration
